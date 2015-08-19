@@ -6,7 +6,7 @@ var morgan = require('morgan');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var login = require('connect-ensure-login');
-var Strategy = require('./strategy');
+var Strategy = require('./lib/strategy');
 
 
 var app = express();
@@ -34,8 +34,8 @@ passport.deserializeUser(function (serialized, done) {
 
 
 var strategy = new Strategy({
-    authorizationURL: 'http://localhost:3000/authorization',
-    tokenURL: 'http://localhost:3000/token',
+    authorizationURL: 'http://localhost:3000/oauth2/auth',
+    tokenURL: 'http://localhost:3000/oauth2/token',
     clientID: 'oauth-consumer-example',
     clientSecret: 'secret2',
     callbackURL: 'http://localhost:3002/auth/example/callback',
@@ -67,6 +67,7 @@ app.get('/auth/example/callback', passport.authenticate('example', {
 app.get('/time', login.ensureLoggedIn('/auth/example'), function (req, res, next) {
     strategy._oauth2.get('http://localhost:3000/time', req.user._accessToken, function (err, body) {
         if (err) {
+            if (err instanceof Error) return next(err);
             if (typeof err !== 'object') return next(new Error(err));
             return next(new Error(err.data));
         }

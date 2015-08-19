@@ -1,6 +1,6 @@
 <% include header %>
 <% if (user) { %>
-    Logged in as <b><%= user.username %></b>. <a href="/logout">Logout</a>
+    Logged in as <b><%= user.id %></b>. <a href="/logout">Logout</a>
 <% } else { %>
     Not logged in. <a href="/auth/example">Login with OAuth2</a>
 <% } %>
