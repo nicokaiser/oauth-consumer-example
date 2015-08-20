@@ -8,6 +8,7 @@
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "morgan": "^1.6.1",
+    "oauth": "^0.9.13",
     "passport": "^0.2.2",
     "passport-oauth2": "^1.1.2"
   },
