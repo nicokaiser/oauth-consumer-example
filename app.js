@@ -62,7 +62,7 @@ app.use('/logout', function (req, res) {
 app.get('/auth/example', passport.authenticate('example'));
 
 app.get('/auth/example/callback', passport.authenticate('example', {
-    failureRedirect: '/', successReturnToOrRedirect: '/'}));
+    failWithError: true, successReturnToOrRedirect: '/'}));
 
 app.get('/time', login.ensureLoggedIn('/auth/example'), function (req, res, next) {
     strategy._oauth2.get('http://localhost:3000/time', req.user._accessToken, function (err, body) {
@@ -73,6 +73,10 @@ app.get('/time', login.ensureLoggedIn('/auth/example'), function (req, res, next
         }
         res.send(body);
     });
+});
+
+app.use(function (err, req, res, next) {
+    res.render('error', {err: err});
 });
 
 
