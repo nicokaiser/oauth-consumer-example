@@ -39,7 +39,7 @@ var strategy = new Strategy({
     clientID: 'oauth-consumer-example',
     clientSecret: 'secret2',
     callbackURL: 'http://localhost:3002/auth/example/callback',
-    profileURL: 'http://localhost:3000/me'
+    userInfoURL: 'http://localhost:3000/oauth2/userinfo'
 }, function (accessToken, refreshToken, profile, done) {
     var user = profile || {};
     user._accessToken = accessToken;
